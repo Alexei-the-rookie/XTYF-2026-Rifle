@@ -2,7 +2,7 @@
 
 ## **1** **简介**
 
-开发工具：Keil V5.38 STM32CubeMX V6.12.0 VsCode
+开发工具：CLion V2025.03 STM32CubeMX V6.12.0 VsCode
 
 软件环境：Windows11
 
