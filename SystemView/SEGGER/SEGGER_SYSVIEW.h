@@ -76,6 +76,7 @@ extern "C" {
 **********************************************************************
 */
 
+
 #define SEGGER_SYSVIEW_MAJOR          3
 #define SEGGER_SYSVIEW_MINOR          32
 #define SEGGER_SYSVIEW_REV            0
@@ -279,6 +280,8 @@ typedef struct {
   void (*pfSendTaskList)          (void);
 } SEGGER_SYSVIEW_OS_API;
 
+// 任务记录 API
+extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
 /*********************************************************************
 *
 *       Control and initialization functions

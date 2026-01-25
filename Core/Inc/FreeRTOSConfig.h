@@ -45,13 +45,13 @@
 
 /* USER CODE BEGIN Includes */
 /* Section where include file can be added */
-#define INCLUDE_xTaskGetIdleTaskHandle 1
+#define INCLUDE_xTaskGetIdleTaskHandle         1
 #define INCLUDE_uxTaskGetStackHighWaterMark    1
 #define INCLUDE_eTaskGetState                  1
 #define INCLUDE_pxTaskGetStackStart            1
 
 #include "SEGGER_SYSVIEW_FreeRTOS.h"
-
+#define configUSE_SEGGER_SYSTEM_VIEW           1
 /* USER CODE END Includes */
 
 /* Ensure definitions are only used by the compiler, and not by the assembler. */
@@ -98,6 +98,14 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil              1
 #define INCLUDE_vTaskDelay                   1
 #define INCLUDE_xTaskGetSchedulerState       1
+
+// 确保使用正确的 CMSIS 版本
+#define configCPU_FAMILY_IS_ARM_M7 (1)
+
+// 如果有浮点支持，确保启用
+#ifndef __VFP_FP__
+#define __VFP_FP__ 1
+#endif
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
