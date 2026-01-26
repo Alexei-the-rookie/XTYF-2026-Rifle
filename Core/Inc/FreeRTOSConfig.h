@@ -44,6 +44,7 @@
  *----------------------------------------------------------*/
 
 /* USER CODE BEGIN Includes */
+
 /* Section where include file can be added */
 #define INCLUDE_xTaskGetIdleTaskHandle         1
 #define INCLUDE_uxTaskGetStackHighWaterMark    1
@@ -59,8 +60,14 @@
   #include <stdint.h>
   extern uint32_t SystemCoreClock;
 #endif
-#define configENABLE_FPU                         0
+#define configENABLE_FPU                         1
 #define configENABLE_MPU                         0
+#define configENABLE_TRUSTZONE                   0   // 根据需求，如果使用 TZ 则设为 1，否则为 0
+#define configRUN_FREERTOS_SECURE_ONLY           (configENABLE_TRUSTZONE == 1) // 条件定义
+#define configCHECK_FOR_STACK_OVERFLOW           1   // 推荐使用方法2，利用MPU检测
+//#define configENFORCE_SYSTEM_CALLS_FROM_KERNEL_ONLY   1   // 消除警告，增强安全
+//#define configTOTAL_MPU_REGIONS                  8   // 或 16，取决于 Cortex-M7 内核配置
+#define configUSE_MPU_WRAPPERS_V2                0  /* 设置为 1 以启用V2包装器 */
 
 #define configUSE_PREEMPTION                     1
 #define configSUPPORT_STATIC_ALLOCATION          1

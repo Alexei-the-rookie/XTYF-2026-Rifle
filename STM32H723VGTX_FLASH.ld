@@ -51,6 +51,29 @@ MEMORY
   RAM_D3  (xrw)    : ORIGIN = 0x38000000,   LENGTH = 16K
 }
 
+/* 定义 MPU 所需的特权和非特权内存区域边界 */
+__FLASH_segment_start__ = ORIGIN(FLASH);
+__FLASH_segment_end__   = ORIGIN(FLASH) + LENGTH(FLASH);
+
+/* 定义 SRAM 区域（根据你的实际 RAM 区域名称和数量调整） */
+/* 例如，对于 RAM_D1: */
+__SRAM_segment_start__ = ORIGIN(RAM_D1);
+__SRAM_segment_end__   = ORIGIN(RAM_D1) + LENGTH(RAM_D1);
+
+/* 特权函数和数据的边界（通常放在 FLASH 和 RAM 的开头部分） */
+/* 这些地址需要根据你的具体布局精心计算，通常由启动文件或MPU初始化代码设置 */
+/* 以下为示例，你需要精确规划 */
+__privileged_functions_start__ = __FLASH_segment_start__;
+__privileged_functions_end__   = __privileged_functions_start__ + 64K; /* 示例大小 */
+
+__privileged_data_start__ = __SRAM_segment_start__;
+__privileged_data_end__   = __privileged_data_start__ + 16K; /* 示例大小 */
+
+/* 假设特权代码之后是系统调用（SVC）代码区域 */
+/* 系统调用区域通常紧接在特权函数区域之后 */
+__syscalls_flash_start__ = __privileged_functions_end__;
+__syscalls_flash_end__   = __syscalls_flash_start__ + 4K; /* 大小示例，可调整 */
+
 /* Define output sections */
 SECTIONS
 {

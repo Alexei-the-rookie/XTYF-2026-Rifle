@@ -59,7 +59,8 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc
+include_directories(
+        Core/Inc
         USB_DEVICE/App
         USB_DEVICE/Target
         Drivers/STM32H7xx_HAL_Driver/Inc
@@ -75,13 +76,21 @@ include_directories(Core/Inc
         SystemView/SEGGER
         SystemView/Config
         SystemView/Sample/FreeRTOSV10
+        Application/Task/Inc
+        BSP/Inc
+        Components/Algorithm/Inc
+        Components/Controller/Inc
+        Components/Device/Inc
 )
 
 
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32H723xx)
 
-#file(GLOB_RECURSE SOURCES "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*")
+#file(GLOB_RECURSE SOURCES "Core/*.*" "Middlewares/*.*" "USB_DEVICE/*.*" "Drivers/*.*"
+#        "Application/Task/Src/*.*" "BSP/Src/*.*"
+#        "Components/Algorithm/Src/*.*" "Components/Controller/Src/*.*" "Components/Device/Src/*.*"
+#        "SystemView/*.*")
 set(sources
     USB_DEVICE/Target/usbd_conf.c
     USB_DEVICE/App/usb_device.c
@@ -115,7 +124,7 @@ set(sources
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32H723VGTX_FLASH.ld)
 
-add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
+#add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 # 修改为：
 add_link_options(
         -mcpu=cortex-m7
@@ -162,8 +171,7 @@ add_link_options(
 )
 
 # 链接子目录中创建的库
-target_link_libraries(${PROJECT_NAME}.elf
-        PUBLIC
+target_link_libraries(${PROJECT_NAME}.elf PUBLIC
         STM32_Drivers
         USB_Device_Library
         FreeRTOS
@@ -177,3 +185,5 @@ add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
         COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}
         COMMENT "Building ${HEX_FILE}
 Building ${BIN_FILE}")
+
+#add_subdirectory(cmake/stm32cubemx)

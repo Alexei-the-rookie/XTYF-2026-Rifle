@@ -280,6 +280,14 @@ void MPU_Config(void)
 
 }
 
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+  (void)xTask;     /* 消除未使用参数警告 */
+  (void)pcTaskName;
+  /* 处理栈溢出：例如，点亮错误LED，然后停止 */
+  // HAL_GPIO_WritePin(LED_ERR_GPIO_Port, LED_ERR_Pin, GPIO_PIN_SET);
+  for(;;); /* 陷入死循环，等待看门狗或调试器介入 */
+}
+
 /**
   * @brief  Period elapsed callback in non blocking mode
   * @note   This function is called  when TIM2 interrupt took place, inside

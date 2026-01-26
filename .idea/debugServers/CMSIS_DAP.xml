@@ -1,0 +1,14 @@
+<component name="DebugServers">
+  <generic-debug-target name="CMSIS-DAP" uniqueID="44ca3361-84aa-4180-928a-6f7a3e012378" selected="true">
+    <debugger version="1">
+      <debugger kind="GDB" isBundled="true" />
+      <env />
+    </debugger>
+    <gdbserver exe="$PROJECT_DIR$/../../openocd-20260121/OpenOCD-20260121-0.12.0/bin/openocd.exe" args="-f stm32h7_stlink.cfg">
+      <env />
+    </gdbserver>
+    <console enabled="true" port="4444" />
+    <target reset-before="false" />
+    <connection remote-string="localhost:3333" custom-script="echo Connecting to target...\n&#10;$GDBTargetCommand$&#10;echo Connected to target!\n" warmup-ms="500" />
+  </generic-debug-target>
+</component>
