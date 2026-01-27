@@ -139,6 +139,8 @@ add_link_options(
 )
 add_link_options(-T ${LINKER_SCRIPT})
 
+link_directories(Middlewares/ST/ARM/DSP/Lib)
+
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
 add_subdirectory(cmake/stm32cubemx)
@@ -175,6 +177,11 @@ target_link_libraries(${PROJECT_NAME}.elf PUBLIC
         STM32_Drivers
         USB_Device_Library
         FreeRTOS
+        Component
+        BSP
+        SystemView
+        Task
+        -larm_cortexM7lfdp_math
 )
 
 set(HEX_FILE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}.hex)

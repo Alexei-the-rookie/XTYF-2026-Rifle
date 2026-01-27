@@ -144,6 +144,16 @@ set(Component_src
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Components/Device/Src/Remote_control.c
 )
 
+set(Task_Src
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Application/Task/Src/CAN_Task.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Application/Task/Src/Control_Task.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Application/Task/Src/INS_Task.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Application/Task/Src/Detect_Task.c
+)
+
+# 在文件顶部或 MX_LINK_LIBS 定义之前添加
+#link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../Middlewares/ST/ARM/DSP/Lib)
+
 # Project static libraries
 set(MX_LINK_LIBS 
     STM32_Drivers
@@ -153,6 +163,8 @@ set(MX_LINK_LIBS
 	Component
 	BSP
 	SystemView
+	Task
+	-larm_cortexM7lfdp_math
 )
 # Interface library for includes and symbols
 add_library(stm32cubemx INTERFACE)
@@ -186,6 +198,10 @@ target_link_libraries(USB_Device_Library PUBLIC stm32cubemx)
 add_library(FreeRTOS OBJECT)
 target_sources(FreeRTOS PRIVATE ${FreeRTOS_Src})
 target_link_libraries(FreeRTOS PUBLIC stm32cubemx)
+
+add_library(Task OBJECT)
+target_sources(Task PRIVATE ${Task_Src})
+target_link_libraries(Task PUBLIC stm32cubemx)
 
 # Add STM32CubeMX generated application sources to the project
 target_sources(${CMAKE_PROJECT_NAME}.elf PRIVATE ${MX_Application_Src})
