@@ -34,59 +34,53 @@ PID_Info_TypeDef Chassis_PID;
 
 void Control_Task(void const * argument)
 {
-  /* USER CODE BEGIN Control_Task */
-  TickType_t Control_Task_SysTick = 0;
+    /* USER CODE BEGIN Control_Task */
+    TickType_t Control_Task_SysTick = 0;
   
 	Control_Init(&Control_Info);
- /* Infinite loop */
-	for(;;)
-  {
-		Control_Task_SysTick = osKernelSysTick();
-
-		
-	  Control_Measure_Update(&Control_Info);
+    /* Infinite loop */
+    for(;;)
+    {
+        Control_Task_SysTick = osKernelSysTick();
+        Control_Measure_Update(&Control_Info);
 		Control_Target_Update(&Control_Info);
-    Control_Info_Update(&Control_Info);
-    USART_Vofa_Justfloat_Transmit(Control_Info.Measure.Chassis_Velocity,0.f,0.f);
+        Control_Info_Update(&Control_Info);
+        USART_Vofa_Justfloat_Transmit(Control_Info.Measure.Chassis_Velocity,0.f,0.f);
 		
 		osDelay(1);
-  }
+    }
 }
   /* USER CODE END Control_Task */
 
 static void Control_Init(Control_Info_Typedef *Control_Info){
 
-  PID_Init(&Chassis_PID,PID_POSITION,Chassis_PID_Param);
+	PID_Init(&Chassis_PID,PID_POSITION,Chassis_PID_Param);
 
-}
+}//初始化所有PID
 
 static void Control_Measure_Update(Control_Info_Typedef *Control_Info){
 
-  Control_Info->Measure.Chassis_Velocity = Chassis_Motor[0].Data.Velocity;
+	Control_Info->Measure.Chassis_Velocity = Chassis_Motor[0].Data.Velocity;
 
-}
+}//更新测量值
 
 static void Control_Target_Update(Control_Info_Typedef *Control_Info){
 
-  Control_Info->Target.Chassis_Velocity = remote_ctrl.rc.ch[3] * 5.f;
+    Control_Info->Target.Chassis_Velocity = remote_ctrl.rc.ch[3] * 5.f;
 
 
-}
+}//更新目标值
 
 static void Control_Info_Update(Control_Info_Typedef *Control_Info){
   
-   PID_Calculate(&Chassis_PID, Control_Info->Target.Chassis_Velocity, Control_Info->Measure.Chassis_Velocity);
-
-	 Control_Info->SendValue[0] = (int16_t)(Chassis_PID.Output);
+    PID_Calculate(&Chassis_PID, Control_Info->Target.Chassis_Velocity, Control_Info->Measure.Chassis_Velocity);
+    Control_Info->SendValue[0] = (int16_t)(Chassis_PID.Output);
 	
-}
+}//更新控制信息
 
 static float FivePower(float NowTime,float UseTime){
      
-	  float Time = (NowTime/UseTime);
-	     
+	float Time = (NowTime/UseTime);
     return 10*powf(Time,3) - 15*powf(Time,4) + 6*powf(Time,5);
-
-
 }
 	
