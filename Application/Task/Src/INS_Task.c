@@ -83,44 +83,45 @@ static void BMI088_Temp_Control(float temp);
   * @brief  Function implementing the StartINSTask thread.
   * @param  argument: Not used
   * @retval None
+  * Back the degree value to the public space.
   */
 /* USER CODE END Header_INS_Task */
 void INS_Task(void const * argument)
 {
-  /* USER CODE BEGIN INS_Task */
-  TickType_t INS_Task_SysTick = 0;
+	/* USER CODE BEGIN INS_Task */
+	TickType_t INS_Task_SysTick = 0;
 
 
 	/* Initializes the INS_Task. */
 	INS_Task_Init();
 	
-  /* Infinite loop */
-  for(;;)
-  {
-    INS_Task_SysTick = osKernelSysTick();
+	/* Infinite loop */
+	for(;;)
+	{
+		INS_Task_SysTick = osKernelSysTick();
 		
 		/* Update the BMI088 measurement */
-    BMI088_Info_Update(&BMI088_Info);
+		BMI088_Info_Update(&BMI088_Info);
 
-    /* Accel measurement LPF2p */
-    INS_Info.Accel[0]   =   LowPassFilter2p_Update(&INS_AccelPF2p[0],BMI088_Info.Accel[0]);
-    INS_Info.Accel[1]   =   LowPassFilter2p_Update(&INS_AccelPF2p[1],BMI088_Info.Accel[1]);
-    INS_Info.Accel[2]   =   LowPassFilter2p_Update(&INS_AccelPF2p[2],BMI088_Info.Accel[2]);
+		/* Accel measurement LPF2p */
+		INS_Info.Accel[0]   =   LowPassFilter2p_Update(&INS_AccelPF2p[0],BMI088_Info.Accel[0]);
+		INS_Info.Accel[1]   =   LowPassFilter2p_Update(&INS_AccelPF2p[1],BMI088_Info.Accel[1]);
+		INS_Info.Accel[2]   =   LowPassFilter2p_Update(&INS_AccelPF2p[2],BMI088_Info.Accel[2]);
 		
-    /* Update the INS gyro in radians */
+		/* Update the INS gyro in radians */
 		INS_Info.Gyro[0]   =   BMI088_Info.Gyro[0];
-    INS_Info.Gyro[1]   =   BMI088_Info.Gyro[1];
-    INS_Info.Gyro[2]   =   BMI088_Info.Gyro[2];
+		INS_Info.Gyro[1]   =   BMI088_Info.Gyro[1];
+		INS_Info.Gyro[2]   =   BMI088_Info.Gyro[2];
 		
 		/* Update the QuaternionEKF */
-    QuaternionEKF_Update(&Quaternion_Info,INS_Info.Gyro,INS_Info.Accel,0.001f);
+		QuaternionEKF_Update(&Quaternion_Info,INS_Info.Gyro,INS_Info.Accel,0.001f);
 		
-    memcpy(INS_Info.Angle,Quaternion_Info.EulerAngle,sizeof(INS_Info.Angle));
+		memcpy(INS_Info.Angle,Quaternion_Info.EulerAngle,sizeof(INS_Info.Angle));
 
 		/* Update the Euler angle in degrees. */
-    INS_Info.Pitch_Angle = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_PITCH]*57.295779513f;
-    INS_Info.Yaw_Angle   = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_YAW]   *57.295779513f;
-    INS_Info.Roll_Angle  = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_ROLL]*57.295779513f;
+		INS_Info.Pitch_Angle = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_PITCH]*57.295779513f;
+		INS_Info.Yaw_Angle   = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_YAW]  *57.295779513f;
+		INS_Info.Roll_Angle  = Quaternion_Info.EulerAngle[IMU_ANGLE_INDEX_ROLL] *57.295779513f;
 		
 		/* Update the yaw total angle */
 		if(INS_Info.Yaw_Angle - INS_Info.Last_Yaw_Angle < -180.f)
@@ -135,20 +136,19 @@ void INS_Task(void const * argument)
 		
 		INS_Info.Yaw_TolAngle = INS_Info.Yaw_Angle + INS_Info.YawRoundCount*360.f;
 		
-    /* Update the INS gyro in degrees */
-    INS_Info.Pitch_Gyro = INS_Info.Gyro[IMU_GYRO_INDEX_PITCH]*RadiansToDegrees;
-    INS_Info.Yaw_Gyro   = INS_Info.Gyro[IMU_GYRO_INDEX_YAW]*RadiansToDegrees;
-    INS_Info.Roll_Gyro  = INS_Info.Gyro[IMU_GYRO_INDEX_ROLL]*RadiansToDegrees;
-		
+		/* Update the INS gyro in degrees */
+		INS_Info.Pitch_Gyro = INS_Info.Gyro[IMU_GYRO_INDEX_PITCH]*RadiansToDegrees;
+		INS_Info.Yaw_Gyro   = INS_Info.Gyro[IMU_GYRO_INDEX_YAW]  *RadiansToDegrees;
+		INS_Info.Roll_Gyro  = INS_Info.Gyro[IMU_GYRO_INDEX_ROLL] *RadiansToDegrees;
+
 		if(INS_Task_SysTick%5 == 0)
 		{
 			BMI088_Temp_Control(BMI088_Info.Temperature);
 		}
 
-    osDelayUntil(&INS_Task_SysTick,1);
-		
-  }
-  /* USER CODE END INS_Task */
+		osDelayUntil(&INS_Task_SysTick,1);
+	}
+	/* USER CODE END INS_Task */
 }
 //------------------------------------------------------------------------------
 /**

@@ -30,11 +30,11 @@ typedef struct
 	float Yaw_TolAngle;
 	float Roll_Angle;
 
-  float Pitch_Gyro;
-  float Yaw_Gyro;
-  float Roll_Gyro;
+	float Pitch_Gyro;
+	float Yaw_Gyro;
+	float Roll_Gyro;
 
-  float Angle[3];
+	float Angle[3];
 	float Gyro[3];	
 	float Accel[3];
 	
