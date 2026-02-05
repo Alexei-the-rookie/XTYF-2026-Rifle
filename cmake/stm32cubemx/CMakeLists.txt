@@ -177,7 +177,9 @@ target_sources(STM32_Drivers PRIVATE ${STM32_Drivers_Src})
 target_link_libraries(STM32_Drivers PUBLIC stm32cubemx)
 
 # Create Component static library
-add_library(Component OBJECT)
+add_library(Component OBJECT
+        ../../Components/Controller/Src/LQR.c
+		../../Components/Device/Src/AK_motor.c)
 target_sources(Component PRIVATE ${Component_src})
 target_link_libraries(Component PUBLIC stm32cubemx)
 

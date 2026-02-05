@@ -18,7 +18,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stdint.h"
 #include "stdbool.h"
-
+#include "LQR.h"
 
 /**
  * @brief typedef structure that contains the information of chassis control
@@ -45,30 +45,8 @@ typedef struct
 	
 }Control_Info_Typedef;
 
-typedef struct
-{
-	float theta_ll;
-	float dtheta_ll;
-	float theta_lr;
-	float dtheta_lr;
-	float theta_wl;
-	float dtheta_wl;
-	float theta_wr;
-	float dtheta_wr;
-	float theta_b;
-	float dtheta_b;
-}vec_state;
-
-typedef struct
-{
-	float T_bll;
-	float T_blr;
-	float T_lwl;
-	float T_lwr;
-}vec_input;
 
 /* Externs---------------------------------------------------------*/
-extern vec_state state, last_state, d_state;
-extern vec_input input;
 extern Control_Info_Typedef Control_Info;
+extern float matK[4][10];
 #endif //CONTROL_TASK_H
