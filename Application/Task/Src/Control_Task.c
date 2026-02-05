@@ -108,20 +108,20 @@ void Control_Task(void const * argument)
 }
   /* USER CODE END Control_Task */
 
-static void Control_Init(Control_Info_Typedef *Control_Info){
-
+static void Control_Init(Control_Info_Typedef *Control_Info)
+{
 	PID_Init(&Chassis_PID,PID_POSITION,Chassis_PID_Param);
 
 }//初始化所有PID
 
-static void Control_Measure_Update(Control_Info_Typedef *Control_Info){
-
+static void Control_Measure_Update(Control_Info_Typedef *Control_Info)
+{
 	Control_Info->Measure.Chassis_Velocity = Chassis_Motor[0].Data.Velocity;
 
 }//更新测量值
 
-static void Control_Target_Update(Control_Info_Typedef *Control_Info){
-
+static void Control_Target_Update(Control_Info_Typedef *Control_Info)
+{
     Control_Info->Target.Chassis_Velocity = remote_ctrl.rc.ch[3] * 5.f;
 
 

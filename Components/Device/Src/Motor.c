@@ -196,26 +196,26 @@ void DJI_Motor_Info_Update(uint32_t *Identifier, uint8_t *Rx_Buf,DJI_Motor_Info_
   */
 float F_Loop_Constrain(float Input, float Min_Value, float Max_Value)
 {
-  if (Max_Value < Min_Value)
-  {
-    return Input;
-  }
+	if (Max_Value < Min_Value)
+	{
+		return Input;
+	}
   
-  float len = Max_Value - Min_Value;    
+	float len = Max_Value - Min_Value;
 
-  if (Input > Max_Value)
-  {
-      do{
-          Input -= len;
-      }while (Input > Max_Value);
-  }
-  else if (Input < Min_Value)
-  {
-      do{
-          Input += len;
-      }while (Input < Min_Value);
-  }
-  return Input;
+	if (Input > Max_Value)
+	{
+		do{
+			Input -= len;
+		}while (Input > Max_Value);
+	}
+	else if (Input < Min_Value)
+	{
+		do{
+			Input += len;
+		}while (Input < Min_Value);
+	}
+	return Input;
 }
 //------------------------------------------------------------------------------
 
@@ -229,14 +229,14 @@ float F_Loop_Constrain(float Input, float Min_Value, float Max_Value)
   */
 static float DJI_Motor_Encoder_To_Anglesum(DJI_Motor_Data_Typedef *Data,float Torque_Ratio,uint16_t MAXEncoder)
 {
-  float res1 = 0,res2 =0;
+	float res1 = 0,res2 =0;
   
-  if(Data == NULL) return 0;
+	if(Data == NULL) return 0;
   
-  /* Judge the motor Initlized */
-  if(Data->Initlized != true)
-  {
-    /* update the last Encoder */
+	/* Judge the motor Initlized */
+	if(Data->Initlized != true)
+	{
+	/* update the last Encoder */
     Data->Last_Encoder = Data->Encoder;
 
     /* reset the angle */
@@ -244,23 +244,23 @@ static float DJI_Motor_Encoder_To_Anglesum(DJI_Motor_Data_Typedef *Data,float To
 
     /* Set the init flag */
     Data->Initlized = true;
-  }
+	}
   
-  /* get the possiable min Encoder err */
-  if(Data->Encoder < Data->Last_Encoder)
-  {
-      res1 = Data->Encoder - Data->Last_Encoder + MAXEncoder;
-  }
-  else if(Data->Encoder > Data->Last_Encoder)
-  {
-      res1 = Data->Encoder - Data->Last_Encoder - MAXEncoder;
-  }
-  res2 = Data->Encoder - Data->Last_Encoder;
+	/* get the possiable min Encoder err */
+	if(Data->Encoder < Data->Last_Encoder)
+	{
+		res1 = Data->Encoder - Data->Last_Encoder + MAXEncoder;
+	}
+	else if(Data->Encoder > Data->Last_Encoder)
+	{
+		res1 = Data->Encoder - Data->Last_Encoder - MAXEncoder;
+	}
+	res2 = Data->Encoder - Data->Last_Encoder;
   
-  /* update the last Encoder */
-  Data->Last_Encoder = Data->Encoder;
+	/* update the last Encoder */
+	Data->Last_Encoder = Data->Encoder;
   
-  /* transforms the Encoder data to tolangle */
+	/* transforms the Encoder data to tolangle */
 	if(fabsf(res1) > fabsf(res2))
 	{
 		Data->Angle += (float)res2/(MAXEncoder*Torque_Ratio)*360.f;
@@ -270,7 +270,7 @@ static float DJI_Motor_Encoder_To_Anglesum(DJI_Motor_Data_Typedef *Data,float To
 		Data->Angle += (float)res1/(MAXEncoder*Torque_Ratio)*360.f;
 	}
   
-  return Data->Angle;
+	return Data->Angle;
 }
 //------------------------------------------------------------------------------
 
@@ -284,45 +284,45 @@ static float DJI_Motor_Encoder_To_Anglesum(DJI_Motor_Data_Typedef *Data,float To
   */
 float DJI_Motor_Encoder_To_Angle(DJI_Motor_Data_Typedef *Data,float torque_ratio,uint16_t MAXEncoder)
 {	
-  float Encoder_Err = 0.f;
+	float Encoder_Err = 0.f;
   
-  /* check the motor init */
-  if(Data->Initlized != true)
-  {
-    /* update the last Encoder */
-    Data->Last_Encoder = Data->Encoder;
+	/* check the motor init */
+	if(Data->Initlized != true)
+	{
+		/* update the last Encoder */
+		Data->Last_Encoder = Data->Encoder;
 
-    /* reset the angle */
-    Data->Angle = Data->Encoder/(MAXEncoder*torque_ratio)*360.f;
+		/* reset the angle */
+		Data->Angle = Data->Encoder/(MAXEncoder*torque_ratio)*360.f;
 
-    /* config the init flag */
-    Data->Initlized = true;
-  }
+		/* config the init flag */
+		Data->Initlized = true;
+	}
   
-  Encoder_Err = Data->Encoder - Data->Last_Encoder;
+	Encoder_Err = Data->Encoder - Data->Last_Encoder;
   
-  /* 0 -> MAXEncoder */		
-  if(Encoder_Err > MAXEncoder*0.5f)
-  {
-    Data->Angle += (float)(Encoder_Err - MAXEncoder)/(MAXEncoder*torque_ratio)*360.f;
-  }
-  /* MAXEncoder-> 0 */		
-  else if(Encoder_Err < -MAXEncoder*0.5f)
-  {
-    Data->Angle += (float)(Encoder_Err + MAXEncoder)/(MAXEncoder*torque_ratio)*360.f;
-  }
-  else
-  {
-    Data->Angle += (float)(Encoder_Err)/(MAXEncoder*torque_ratio)*360.f;
-  }
+	/* 0 -> MAXEncoder */
+	if(Encoder_Err > MAXEncoder*0.5f)
+	{
+		Data->Angle += (float)(Encoder_Err - MAXEncoder)/(MAXEncoder*torque_ratio)*360.f;
+	}
+	/* MAXEncoder-> 0 */
+	else if(Encoder_Err < -MAXEncoder*0.5f)
+	{
+		Data->Angle += (float)(Encoder_Err + MAXEncoder)/(MAXEncoder*torque_ratio)*360.f;
+	}
+	else
+	{
+		Data->Angle += (float)(Encoder_Err)/(MAXEncoder*torque_ratio)*360.f;
+	}
   
-  /* update the last Encoder */
-  Data->Last_Encoder = Data->Encoder;
+	/* update the last Encoder */
+	Data->Last_Encoder = Data->Encoder;
   
-  /* loop constrain */
-  Data->Angle = F_Loop_Constrain(Data->Angle,-180.f,180.f);
+	/* loop constrain */
+	Data->Angle = F_Loop_Constrain(Data->Angle,-180.f,180.f);
 
-  return Data->Angle;
+	return Data->Angle;
 }
 
 /**
@@ -332,19 +332,19 @@ float DJI_Motor_Encoder_To_Angle(DJI_Motor_Data_Typedef *Data,float torque_ratio
   * @param  CMD£ºTransmit Command  (DJI_Motor_Type_e)
   * @retval None
   */
-void DM_Motor_Command(FDCAN_TxFrame_TypeDef *FDCAN_TxFrame,DM_Motor_Info_Typedef *DM_Motor,uint8_t CMD){
-
-	 FDCAN_TxFrame->Header.Identifier = DM_Motor->FDCANFrame.RxIdentifier;
+void DM_Motor_Command(FDCAN_TxFrame_TypeDef *FDCAN_TxFrame,DM_Motor_Info_Typedef *DM_Motor,uint8_t CMD)
+{
+	FDCAN_TxFrame->Header.Identifier = DM_Motor->FDCANFrame.RxIdentifier;
   	
-	 FDCAN_TxFrame->Data[0] = 0xFF;
-   FDCAN_TxFrame->Data[1] = 0xFF;
- 	 FDCAN_TxFrame->Data[2] = 0xFF;
-	 FDCAN_TxFrame->Data[3] = 0xFF;
-	 FDCAN_TxFrame->Data[4] = 0xFF;
-	 FDCAN_TxFrame->Data[5] = 0xFF;
-	 FDCAN_TxFrame->Data[6] = 0xFF;
+	FDCAN_TxFrame->Data[0] = 0xFF;
+	FDCAN_TxFrame->Data[1] = 0xFF;
+ 	FDCAN_TxFrame->Data[2] = 0xFF;
+	FDCAN_TxFrame->Data[3] = 0xFF;
+	FDCAN_TxFrame->Data[4] = 0xFF;
+	FDCAN_TxFrame->Data[5] = 0xFF;
+	FDCAN_TxFrame->Data[6] = 0xFF;
 	
-	 switch(CMD){
+	switch(CMD){
 		 
 		  case Motor_Enable :
 	        FDCAN_TxFrame->Data[7] = 0xFC; 
@@ -375,7 +375,7 @@ void DM_Motor_Command(FDCAN_TxFrame_TypeDef *FDCAN_TxFrame,DM_Motor_Info_Typedef
   */
 void DM_Motor_CAN_TxMessage(FDCAN_TxFrame_TypeDef *FDCAN_TxFrame,DM_Motor_Info_Typedef *DM_Motor,float Postion, float Velocity, float KP, float KD, float Torque){
 	
-   if(DM_Motor->Control_Mode == MIT){
+	if(DM_Motor->Control_Mode == MIT){
 		 
 		 uint16_t Postion_Tmp,Velocity_Tmp,Torque_Tmp,KP_Tmp,KD_Tmp;
 		 

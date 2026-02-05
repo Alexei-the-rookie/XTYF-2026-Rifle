@@ -156,15 +156,15 @@ void INS_Task(void const * argument)
  */
 static void INS_Task_Init(void)
 {
-  /* Initializes the Second order lowpass filter  */
-  LowPassFilter2p_Init(&INS_AccelPF2p[0],INS_LPF2p_Alpha);
-  LowPassFilter2p_Init(&INS_AccelPF2p[1],INS_LPF2p_Alpha);
-  LowPassFilter2p_Init(&INS_AccelPF2p[2],INS_LPF2p_Alpha);
+	/* Initializes the Second order lowpass filter  */
+	LowPassFilter2p_Init(&INS_AccelPF2p[0],INS_LPF2p_Alpha);
+	LowPassFilter2p_Init(&INS_AccelPF2p[1],INS_LPF2p_Alpha);
+	LowPassFilter2p_Init(&INS_AccelPF2p[2],INS_LPF2p_Alpha);
 	
-  /* Initializes the Temperature Control PID  */
+	/* Initializes the Temperature Control PID  */
 	PID_Init(&TempCtrl_PID,PID_POSITION,TemCtrl_PID_Param);
 	
-  /* Initializes the Quaternion EKF */
+	/* Initializes the Quaternion EKF */
 	QuaternionEKF_Init(&Quaternion_Info,10.f, 0.001f, 1000000.f,QuaternionEKF_A_Data,QuaternionEKF_P_Data);
 }
 //------------------------------------------------------------------------------

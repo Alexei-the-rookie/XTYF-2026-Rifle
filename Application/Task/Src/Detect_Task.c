@@ -33,18 +33,18 @@
 /* USER CODE END Header_Detect_Task */
 void Detect_Task(void const * argument)
 {
-  /* USER CODE BEGIN Detect_Task */
-//  TickType_t systick = 0;
+	/* USER CODE BEGIN Detect_Task */
+	//  TickType_t systick = 0;
 	
 
-  /* Infinite loop */
-  for(;;)
-  {
+	/* Infinite loop */
+	for(;;)
+	{
 
-    Remote_Message_Moniter(&remote_ctrl); 
-    osDelay(1);
-  }
-  /* USER CODE END Detect_Task */
+		Remote_Message_Moniter(&remote_ctrl);
+		osDelay(1);
+	}
+	/* USER CODE END Detect_Task */
 }
 
 		

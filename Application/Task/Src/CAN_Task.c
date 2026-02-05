@@ -32,39 +32,39 @@
 {
 
  
-  TickType_t CAN_Task_SysTick = 0;
+	TickType_t CAN_Task_SysTick = 0;
 	DM_Motor_Command(&FDCAN2_TxFrame,&DM_8009_Motor[0],Motor_Enable);
-  osDelay(30);
+	osDelay(30);
 	DM_Motor_Command(&FDCAN2_TxFrame,&DM_8009_Motor[1],Motor_Enable);
-  osDelay(30);
+	osDelay(30);
     DM_Motor_Command(&FDCAN2_TxFrame,&DM_8009_Motor[2],Motor_Enable);
-  osDelay(30);
+	osDelay(30);
 	DM_Motor_Command(&FDCAN2_TxFrame,&DM_8009_Motor[4],Motor_Enable);
-  osDelay(30);
+	osDelay(30);
 	for(;;)
-  {
+	{
 	
-  CAN_Task_SysTick = osKernelSysTick();
+		CAN_Task_SysTick = osKernelSysTick();
 		
-	 // CAN-FD	
-	 DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[0],0,0,0,0,0);
-	 DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[1],0,0,0,0,0);
-     DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[2],0,0,0,0,0);
-     DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[3],0,0,0,0,0);
+		// CAN-FD
+		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[0],0,0,0,0,0);
+		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[1],0,0,0,0,0);
+		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[2],0,0,0,0,0);
+		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[3],0,0,0,0,0);
 		
-     FDCAN1_TxFrame.Data[0] = (uint8_t)(Control_Info.SendValue[0]>>8);
-	 FDCAN1_TxFrame.Data[1] = (uint8_t)(Control_Info.SendValue[0]);	
-	 FDCAN1_TxFrame.Data[2] = (uint8_t)(Control_Info.SendValue[1]>>8);	
-	 FDCAN1_TxFrame.Data[3] = (uint8_t)(Control_Info.SendValue[1]);	
-     USER_FDCAN_AddMessageToTxFifoQ(&FDCAN1_TxFrame);
+		FDCAN1_TxFrame.Data[0] = (uint8_t)(Control_Info.SendValue[0]>>8);
+		FDCAN1_TxFrame.Data[1] = (uint8_t)(Control_Info.SendValue[0]);
+		FDCAN1_TxFrame.Data[2] = (uint8_t)(Control_Info.SendValue[1]>>8);
+		FDCAN1_TxFrame.Data[3] = (uint8_t)(Control_Info.SendValue[1]);
+		USER_FDCAN_AddMessageToTxFifoQ(&FDCAN1_TxFrame);
 		
-	 if(CAN_Task_SysTick % 2 == 0){
-	 
-	 //500Hz发送 请保证所有任务osDelay(1)
-	 
-	 }
-	 osDelay(1);
-  }
+		if(CAN_Task_SysTick % 2 == 0)
+		{
+			//500Hz发送 请保证所有任务osDelay(1)
+
+		}
+		osDelay(1);
+	}
  
 }
 
