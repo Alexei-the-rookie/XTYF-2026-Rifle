@@ -41,7 +41,7 @@ static float matA[10][10] = {
 	0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0
-};//system maatrix
+};//system matrix
 
 static float matB[10][4] = {
 	0,0,0,0,
