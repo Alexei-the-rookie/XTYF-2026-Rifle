@@ -76,13 +76,13 @@ typedef struct
  */
 typedef struct
 {
-    float KP;             //±ÈÀýÏµÊý
-    float KI;             //»ý·ÖÏµÊý
-    float KD;             //Î¢·ÖÏµÊý
-    float Alpha;           //Î¢·ÖÒ»½×ÂË²¨Æ÷ÏµÊý
-		float Deadband;       //ËÀÇø µ±Îó²î¾ø¶ÔÖµÐ¡ÓÚËÀÇø PIDÍ£Ö¹¼ÆËã¡£
-    float LimitIntegral;  //»ý·ÖÏÞ·ù
-    float LimitOutput;    //×ÜÊä³öÏÞ·ù
+    float KP;             //ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    float KI;             //ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+    float KD;             //Î¢ï¿½ï¿½Ïµï¿½ï¿½
+    float Alpha;           //Î¢ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+		float Deadband;       //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÐ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PIDÍ£Ö¹ï¿½ï¿½ï¿½ã¡£
+    float LimitIntegral;  //ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½
+    float LimitOutput;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½
 }PID_Parameter_Typedef;
 
 /**
@@ -90,36 +90,36 @@ typedef struct
  */
 typedef struct _PID_TypeDef
 {
-		PID_Type_e Type;    //PIDÀàÐÍ Î»ÖÃÊ½orÔöÁ¿Ê½ Í¨³£Ê¹ÓÃÎ»ÖÃÊ½
+		PID_Type_e Type;    //PIDï¿½ï¿½ï¿½ï¿½ Î»ï¿½ï¿½Ê½orï¿½ï¿½ï¿½ï¿½Ê½ Í¨ï¿½ï¿½Ê¹ï¿½ï¿½Î»ï¿½ï¿½Ê½
 	
-		float Target;       //Ä¿±êÖµ
-		float Measure;      //Êµ¼ÊÖµ
+		float Target;       //Ä¿ï¿½ï¿½Öµ
+		float Measure;      //Êµï¿½ï¿½Öµ
 	
-    float Err[3];       //Îó²î Ä¿±êÖµ-ÆÚÍûÖµ = Îó²î µ±Ç°ÒÔ¼°¹ýÈ¥Á½´ÎµÄÎó²î 
-		float Integral;     //Îó²î»ý·ÖÖµ Îó²îÀÛ¼Ó
-    float Pout;         // KP * Îó²îÖµ ±ÈÀýÊä³ö
-    float Iout;         // KI * Îó²î»ý·Ö »ý·ÖÊä³ö
-    float Dout;         // KD * Îó²îÎ¢·Ö£¨²î·Ö£©Î¢·ÖÊä³ö
-    float Output;       //×ÜÊä³ö Pout + Iout + Dout = Output
+    float Err[3];       //ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½Öµ-ï¿½ï¿½ï¿½ï¿½Öµ = ï¿½ï¿½ï¿½ ï¿½ï¿½Ç°ï¿½Ô¼ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ 
+		float Integral;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ ï¿½ï¿½ï¿½ï¿½Û¼ï¿½
+    float Pout;         // KP * ï¿½ï¿½ï¿½Öµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    float Iout;         // KI * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    float Dout;         // KD * ï¿½ï¿½ï¿½Î¢ï¿½Ö£ï¿½ï¿½ï¿½Ö£ï¿½Î¢ï¿½ï¿½ï¿½ï¿½ï¿½
+    float Output;       //ï¿½ï¿½ï¿½ï¿½ï¿½ Pout + Iout + Dout = Output
 	
-	  LowPassFilter1p_Info_TypeDef Dout_LPF; //Î¢·ÖÊä³öµÄÒ»½×ÂË²¨Æ÷
+	  LowPassFilter1p_Info_TypeDef Dout_LPF; //Î¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½
 	
 	
-		PID_Parameter_Typedef Param;            //PID²ÎÊý½á¹¹Ìå
-    PID_ErrorHandler_Typedef ERRORHandler;  //PID´íÎó´¦Àí½á¹¹Ìå
+		PID_Parameter_Typedef Param;            //PIDï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½
+    PID_ErrorHandler_Typedef ERRORHandler;  //PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½
 
     /**
-     * @brief ³õÊ¼»¯PID²ÎÊýµÄº¯ÊýÖ¸Õë£¬½«PID²ÎÊý×°ÔØÖÁPID²ÎÊý½á¹¹ÌåÖÐ¡£
-     * @param PID: Ö¸Ïò_pid_TypeDef½á¹¹µÄÖ¸Õë£¬°üº¬PID¿ØÖÆÆ÷µÄÐÅÏ¢¡£
-     * @param Param: Ö¸ÏòPID²ÎÊýµÄ¸¡µãÐÍÖ¸Õë£¬°üº¬PID²ÎÊý¡£
-     * @retval PID´íÎó×´Ì¬ ·µ»ØPIDÊÇ·ñ³õÊ¼»¯³É¹¦¡£
+     * @brief ï¿½ï¿½Ê¼ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½ï¿½Ð¡ï¿½
+     * @param PID: Ö¸ï¿½ï¿½_pid_TypeDefï¿½á¹¹ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
+     * @param Param: Ö¸ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @retval PIDï¿½ï¿½ï¿½ï¿½×´Ì¬ ï¿½ï¿½ï¿½ï¿½PIDï¿½Ç·ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½
      */
     PID_Status_e (*PID_Param_Init)(struct _PID_TypeDef *PID,float *Param);
 
     /**
-     * @brief Çå³ýpid¼ÆËãº¯ÊýµÄ¼ò¶ÌÖ¸Õë¡£
-     * @param PID:Ö¸Ïò_pid_TypeDef½á¹¹µÄÖ¸Õë£¬°üº¬PID¿ØÖÆÆ÷µÄÐÅÏ¢¡£
-     * @retval ÎÞ.
+     * @brief ï¿½ï¿½ï¿½pidï¿½ï¿½ï¿½ãº¯ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ö¸ï¿½ë¡£
+     * @param PID:Ö¸ï¿½ï¿½_pid_TypeDefï¿½á¹¹ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½
+     * @retval ï¿½ï¿½.
      */
 		void (*PID_Calc_Clear)(struct _PID_TypeDef *PID);
 				

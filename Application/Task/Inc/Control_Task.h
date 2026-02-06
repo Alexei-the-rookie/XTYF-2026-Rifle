@@ -26,27 +26,21 @@
 
 typedef struct 
 {
-	
 	struct{
-		
-		float Chassis_Velocity;
-		
-	
+		float Motor_Velocity;
+		float Motor_Position;
 	}Target;	
  
- struct{
-		
-	 float	Chassis_Velocity;
-		
-	
+	struct{
+		float Motor_Velocity;
+		float Motor_Position;
 	}Measure;
-	
+
 	int16_t SendValue[4];
-	
 }Control_Info_Typedef;
 
 
 /* Externs---------------------------------------------------------*/
-extern Control_Info_Typedef Control_Info;
+extern Control_Info_Typedef Control_Info, Motor_Info;
 extern float matK[4][10];
 #endif //CONTROL_TASK_H

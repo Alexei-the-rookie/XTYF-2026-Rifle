@@ -34,9 +34,9 @@ void LQR_ref_state_update(vec_state *ref_state)
     ref_state->theta_b = 0.f;
     ref_state->dtheta_b = 0.f;
     ref_state->theta_wl = 0.f;
-    ref_state->dtheta_wl = Control_Info.Target.Chassis_Velocity;
+    ref_state->dtheta_wl = 0.f;//Control_Info.Target.Chassis_Velocity;
     ref_state->theta_wr = 0.f;
-    ref_state->dtheta_wr = Control_Info.Target.Chassis_Velocity;
+    ref_state->dtheta_wr = 0.f;//Control_Info.Target.Chassis_Velocity;
     ref_state->theta_ll = 0.f;
     ref_state->dtheta_ll = 0.f;
     ref_state->theta_lr = 0.f;

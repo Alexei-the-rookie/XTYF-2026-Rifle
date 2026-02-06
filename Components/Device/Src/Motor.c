@@ -45,16 +45,16 @@ DJI_Motor_Info_Typedef DJI_Right_Motor =
 
 /**
  * @brief The structure that contains the Information of yaw motor.Use DJI GM6020 motor.
- *//*
+ */
 DJI_Motor_Info_Typedef DJI_Yaw_Motor =
 {
 	  .Type = DJI_GM6020,
 		.FDCANFrame = {
-					  .TxIdentifier = 0x1ff,
-					  .RxIdentifier = 0x206,
+					  .TxIdentifier = 0x1fe,
+					  .RxIdentifier = 0x205,
 		}
 
-};*/
+};
 //------------------------------------------------------------------------------
 
 /**

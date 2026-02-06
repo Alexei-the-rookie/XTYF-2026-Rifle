@@ -47,17 +47,17 @@
 	{
 	
 		CAN_Task_SysTick = osKernelSysTick();
-		
+		Motor_Info.SendValue[0] = 1000;
 		/*// CAN-FD
 		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[0],0,0,0,0,0);
 		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[1],0,0,0,0,0);
 		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[2],0,0,0,0,0);
 		DM_Motor_CAN_TxMessage(&FDCAN2_TxFrame,&DM_8009_Motor[3],0,0,0,0,0);
 		*/
-		FDCAN1_TxFrame.Data[0] = (uint8_t)(Control_Info.SendValue[0]>>8);
-		FDCAN1_TxFrame.Data[1] = (uint8_t)(Control_Info.SendValue[0]);
-		FDCAN1_TxFrame.Data[2] = (uint8_t)(Control_Info.SendValue[1]>>8);
-		FDCAN1_TxFrame.Data[3] = (uint8_t)(Control_Info.SendValue[1]);
+		FDCAN1_TxFrame.Data[0] = (uint8_t)(Motor_Info.SendValue[0]>>8);
+		FDCAN1_TxFrame.Data[1] = (uint8_t)(Motor_Info.SendValue[0]);
+		//FDCAN1_TxFrame.Data[2] = (uint8_t)(Control_Info.SendValue[1]>>8);
+		//FDCAN1_TxFrame.Data[3] = (uint8_t)(Control_Info.SendValue[1]);
 		USER_FDCAN_AddMessageToTxFifoQ(&FDCAN1_TxFrame);
 		
 		if(CAN_Task_SysTick % 2 == 0)
