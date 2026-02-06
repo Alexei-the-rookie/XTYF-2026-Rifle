@@ -69,18 +69,18 @@ void LQR_state_update(vec_state *state, vec_state *last_state, vec_state *ref_st
     error->dtheta_lr = ref_state->dtheta_lr - state->dtheta_lr;//calculate the error between target state and current state.
 }
 
-void LQR_calc(vec_state *error, vec_input *input)
+void LQR_calc(vec_state *vec_error, vec_input *vec_input)
 {
-    input->T_bll = matK[0][0] * error->theta_ll + matK[0][1] * error->dtheta_ll + matK[0][2] * error->theta_lr + matK[0][3] * error->dtheta_lr
-                 + matK[0][4] * error->theta_wl + matK[0][5] * error->dtheta_wl + matK[0][6] * error->theta_wr
-                 + matK[0][7] * error->dtheta_wr + matK[0][8] * error->theta_b + matK[0][9] * error->dtheta_b;
-    input->T_blr = matK[1][0] * error->theta_ll + matK[1][1] * error->dtheta_ll + matK[1][2] * error->theta_lr + matK[1][3] * error->dtheta_lr
-                 + matK[1][4] * error->theta_wl + matK[1][5] * error->dtheta_wl + matK[1][6] * error->theta_wr
-                 + matK[1][7] * error->dtheta_wr + matK[1][8] * error->theta_b + matK[1][9] * error->dtheta_b;
-    input->T_lwl = matK[2][0] * error->theta_ll + matK[2][1] * error->dtheta_ll + matK[2][2] * error->theta_lr + matK[2][3] * error->dtheta_lr
-                 + matK[2][4] * error->theta_wl + matK[2][5] * error->dtheta_wl + matK[2][6] * error->theta_wr
-                 + matK[2][7] * error->dtheta_wr + matK[2][8] * error->theta_b + matK[2][9] * error->dtheta_b;
-    input->T_lwr = matK[3][0] * error->theta_ll + matK[3][1] * error->dtheta_ll + matK[3][2] * error->theta_lr + matK[3][3] * error->dtheta_lr
-                 + matK[3][4] * error->theta_wl + matK[3][5] * error->dtheta_wl + matK[3][6] * error->theta_wr
-                 + matK[3][7] * error->dtheta_wr + matK[3][8] * error->theta_b + matK[3][9] * error->dtheta_b;
+    vec_input->T_bll = matK[0][0] * vec_error->theta_ll + matK[0][1] * vec_error->dtheta_ll + matK[0][2] * vec_error->theta_lr + matK[0][3] * vec_error->dtheta_lr
+                 + matK[0][4] * vec_error->theta_wl + matK[0][5] * vec_error->dtheta_wl + matK[0][6] * vec_error->theta_wr
+                 + matK[0][7] * vec_error->dtheta_wr + matK[0][8] * vec_error->theta_b + matK[0][9] * vec_error->dtheta_b;
+    vec_input->T_blr = matK[1][0] * vec_error->theta_ll + matK[1][1] * vec_error->dtheta_ll + matK[1][2] * vec_error->theta_lr + matK[1][3] * vec_error->dtheta_lr
+                 + matK[1][4] * vec_error->theta_wl + matK[1][5] * vec_error->dtheta_wl + matK[1][6] * vec_error->theta_wr
+                 + matK[1][7] * vec_error->dtheta_wr + matK[1][8] * vec_error->theta_b + matK[1][9] * vec_error->dtheta_b;
+    vec_input->T_lwl = matK[2][0] * vec_error->theta_ll + matK[2][1] * vec_error->dtheta_ll + matK[2][2] * vec_error->theta_lr + matK[2][3] * vec_error->dtheta_lr
+                 + matK[2][4] * vec_error->theta_wl + matK[2][5] * vec_error->dtheta_wl + matK[2][6] * vec_error->theta_wr
+                 + matK[2][7] * vec_error->dtheta_wr + matK[2][8] * vec_error->theta_b + matK[2][9] * vec_error->dtheta_b;
+    vec_input->T_lwr = matK[3][0] * vec_error->theta_ll + matK[3][1] * vec_error->dtheta_ll + matK[3][2] * vec_error->theta_lr + matK[3][3] * vec_error->dtheta_lr
+                 + matK[3][4] * vec_error->theta_wl + matK[3][5] * vec_error->dtheta_wl + matK[3][6] * vec_error->theta_wr
+                 + matK[3][7] * vec_error->dtheta_wr + matK[3][8] * vec_error->theta_b + matK[3][9] * vec_error->dtheta_b;
 }//calculate the input based on the error and gain matrix. u=-K(x-x_ref)
