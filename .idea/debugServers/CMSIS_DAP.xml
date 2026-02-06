@@ -4,7 +4,7 @@
       <debugger kind="GDB" isBundled="true" />
       <env />
     </debugger>
-    <gdbserver exe="$PROJECT_DIR$/../../../openocd-20260121/OpenOCD-20260121-0.12.0/bin/openocd.exe" args="-f stm32h7_stlink.cfg">
+    <gdbserver exe="$PROJECT_DIR$/../../../openocd-20260121/OpenOCD-20260121-0.12.0/bin/openocd.exe" args="-f daplink-miao.cfg">
       <env />
     </gdbserver>
     <console enabled="true" port="4444" />

@@ -50,7 +50,7 @@ DJI_Motor_Info_Typedef DJI_Yaw_Motor =
 {
 	  .Type = DJI_GM6020,
 		.FDCANFrame = {
-					  .TxIdentifier = 0x1fe,
+					  .TxIdentifier = 0x1fe,//0x_xfe for current control, 0x_xff for voltage control.
 					  .RxIdentifier = 0x205,
 		}
 

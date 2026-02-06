@@ -29,8 +29,8 @@ static void Control_Info_Update(Control_Info_Typedef *Control_Info);
 Control_Info_Typedef Control_Info, Motor_Info;
 //                                   KP     KI     KD    Alpha  Deadband  I_MAX   Output_MAX
 static float Chassis_PID_Param[7] = {13.f,  0.1f,  0.f,  0.f,   0.f,      5000.f, 12000.f};
-static float Pos6020_PID_Param[7] = {6.f,   0.f,   0.f,  0.f,   0.f,      5000.f, 10000.f};
-static float Vel6020_PID_Param[7] = {6.f,   0.f,   0.f,  0.f,   0.f,      5000.f, 10000.f};
+static float Pos6020_PID_Param[7] = {80.f,  0.f,   0.f,  0.f,   0.f,      5000.f, 10000.f};
+static float Vel6020_PID_Param[7] = {64.f,  100.f, 0.f,  0.f,   0.f,      5000.f, 16000.f};
 //write all your PID parameters here.
 //Every PID controller will get calculated in the Control Task.
 static float matA[10][10] = {
@@ -96,7 +96,7 @@ void Control_Task(void const * argument)
     /* USER CODE BEGIN Control_Task */
     TickType_t Control_Task_SysTick = 0;
   
-	Control_Init(&Control_Info);
+	Control_Init(&Motor_Info);
     /* Infinite loop */
     for(;;)
     {
@@ -114,8 +114,8 @@ void Control_Task(void const * argument)
 static void Control_Init(Control_Info_Typedef *Control_Info)
 {
 	//PID_Init(&Chassis_PID,PID_POSITION,Chassis_PID_Param);
-	PID_Init(&Vel_PID,PID_VELOCITY,Vel6020_PID_Param);
-	PID_Init(&Pos_PID,PID_POSITION,Pos6020_PID_Param);
+	PID_Init(&Vel_PID,PID_VELOCITY, Vel6020_PID_Param);
+	PID_Init(&Pos_PID,PID_POSITION, Pos6020_PID_Param);
 }//初始化所有PID
 
 static void Control_Measure_Update(Control_Info_Typedef *Control_Info)
