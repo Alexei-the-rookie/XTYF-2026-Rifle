@@ -142,6 +142,7 @@ set(Component_src
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Components/Device/Src/Motor.c
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Components/Device/Src/Referee_System.c
 	${CMAKE_CURRENT_SOURCE_DIR}/../../Components/Device/Src/Remote_control.c
+	${CMAKE_CURRENT_SOURCE_DIR}/../../Components/Device/Src/AK_motor.c
 )
 
 set(Task_Src
