@@ -29,8 +29,8 @@ static void Control_Info_Update(Control_Info_Typedef *Control_Info);
 Control_Info_Typedef Control_Info, Motor_Info;
 //                                   KP     KI     KD    Alpha  Deadband  I_MAX   Output_MAX
 static float Chassis_PID_Param[7] = {13.f,  0.1f,  0.f,  0.f,   0.f,      5000.f, 12000.f};
-static float Pos6020_PID_Param[7] = {80.f,  0.f,   0.f,  0.f,   0.f,      5000.f, 10000.f};
-static float Vel6020_PID_Param[7] = {64.f,  100.f, 0.f,  0.f,   0.f,      5000.f, 16000.f};
+static float Pos6020_PID_Param[7] = {12.f,  1.f,   1.f,  0.f,   0.f,      5000.f, 10000.f};
+static float Vel6020_PID_Param[7] = {20.f,  1.f,   0.f,  0.f,   0.f,      5000.f, 16000.f};
 //write all your PID parameters here.
 //Every PID controller will get calculated in the Control Task.
 static float matA[10][10] = {
@@ -104,7 +104,7 @@ void Control_Task(void const * argument)
         Control_Measure_Update(&Motor_Info);
 		Control_Target_Update(&Motor_Info);
         Control_Info_Update(&Motor_Info);
-        USART_Vofa_Justfloat_Transmit(0.f,0.f,0.f);
+        USART_Vofa_Justfloat_Transmit(Motor_Info.Measure.Motor_Velocity,Motor_Info.Target.Motor_Velocity,0.f);
 		
 		osDelay(1);
     }
@@ -128,8 +128,8 @@ static void Control_Measure_Update(Control_Info_Typedef *Control_Info)
 static void Control_Target_Update(Control_Info_Typedef *Control_Info)
 {
     //Control_Info->Target.Chassis_Velocity = remote_ctrl.rc.ch[3] * 5.f;
-	Control_Info->Target.Motor_Velocity = Pos_PID.Output;
-	Control_Info->Target.Motor_Position = 3.f*(PI/4.f)*sinf(0.003f * osKernelSysTick()) + PI/2.f;
+	Control_Info->Target.Motor_Velocity =  Pos_PID.Output;//200.f * sinf(0.001f * osKernelSysTick())//RPM
+	Control_Info->Target.Motor_Position =  0.f;//-120.f * sinf(0.002f * osKernelSysTick());// ;//150.f
 
 }//更新目标值
 
